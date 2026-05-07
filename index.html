@@ -138,10 +138,7 @@
         /* Review System Styles */
         .reviews { padding: 80px 8%; text-align: center; background: var(--black); }
         .rating-summary { background: #111; padding: 30px; border-radius: 8px; display: inline-block; margin-bottom: 30px; border: 1px solid var(--gold); }
-        .rating-summary h4 { font-size: 2.5rem; color: var(--gold); }
-        .star-input { font-size: 2.2rem; color: #333; margin: 20px 0; }
-        .star-input i { cursor: pointer; transition: 0.2s; padding: 0 5px; }
-        .star-input i.active { color: var(--gold); }
+        .rating-summary h4 { font-size: 3.5rem; color: var(--gold); margin-bottom: 5px; }
 
         /* Footer */
         footer { padding: 60px 8%; border-top: 1px solid #222; background: var(--black); }
@@ -285,15 +282,34 @@
 
     <section class="reviews" id="reviews">
         <div class="header-title"><h2>Customer <span>Experience</span> | آراء <span>العملاء</span></h2></div>
-        <div class="rating-summary"><h4 id="avg-val">New</h4><p id="review-status">Be the first to rate us!</p></div>
-        <div class="quote-form-container" style="max-width:500px;">
-            <div class="star-input" id="star-box">
-                <i class="fa fa-star" data-val="1"></i><i class="fa fa-star" data-val="2"></i>
-                <i class="fa fa-star" data-val="3"></i><i class="fa fa-star" data-val="4"></i>
-                <i class="fa fa-star" data-val="5"></i>
+        
+        <div class="rating-summary" style="background: #111; padding: 40px; border-radius: 8px; border: 1px solid var(--gold); display: inline-block;">
+            <h4 style="font-size: 3.5rem; color: var(--gold); margin-bottom: 5px;">4.9</h4>
+            <div class="star-display" style="color: var(--gold); font-size: 2rem; margin-bottom: 10px;">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-stroke"></i>
             </div>
-            <textarea id="rev_msg" placeholder="Share your feedback..." style="width:100%; background:#000; color:#fff; border:1px solid #333; padding:15px; border-radius:4px; height:100px; margin-bottom:15px; font-family: inherit;"></textarea>
-            <button class="btn-main" style="width:100%;" onclick="submitReview()">Submit Review</button>
+            <p style="font-weight: 900; font-size: 1.1rem; color: var(--white);">Excellent | ممتاز</p>
+            <p id="review-status" style="color: #888; margin-top: 5px;">Based on 109 verified Google reviews</p>
+        </div>
+
+        <div class="quote-form-container" style="max-width:550px; text-align: center; margin: 30px auto 0;">
+            <p style="margin-bottom: 25px; color: #ccc; line-height: 1.6;">
+                Providing elite vehicle recovery across Jeddah, Riyadh, and all KSA cities. Your trust is our greatest achievement.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="https://search.google.com/local/reviews?placeid=YOUR_PLACE_ID_HERE" target="_blank" class="btn-main" style="text-decoration: none; display: block;">
+                    VIEW ALL REVIEWS ON GOOGLE
+                </a>
+                
+                <a href="https://wa.me/966534274780" target="_blank" class="btn-main" style="background: #25D366; color: white; text-decoration: none; display: block; border: none;">
+                    SEND FEEDBACK VIA WHATSAPP
+                </a>
+            </div>
         </div>
     </section>
 
@@ -316,35 +332,21 @@
 
     <script>
         let gpsLink = "Not Provided";
+        
         function getGPS() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(p => {
-                    gpsLink = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
+                    gpsLink = `http://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`;
                     alert("✅ GPS Location Attached!");
                 });
             }
         }
+
         function sendQuote() {
             const v = document.getElementById('v_type').value;
             const p = document.getElementById('p_loc').value;
             const d = document.getElementById('d_loc').value;
             const msg = encodeURIComponent(`🚨 *NEW QUOTE*\nVehicle: ${v}\nPickup: ${p}\nDropoff: ${d}\nMap: ${gpsLink}`);
-            window.open(`https://wa.me/966534274780?text=${msg}`);
-        }
-        const stars = document.querySelectorAll('.star-input i');
-        let selected = 0;
-        stars.forEach(s => {
-            s.onclick = function() {
-                selected = this.getAttribute('data-val');
-                stars.forEach(st => {
-                    st.classList.remove('active');
-                    if(st.getAttribute('data-val') <= selected) st.classList.add('active');
-                });
-            }
-        });
-        function submitReview() {
-            const feedback = document.getElementById('rev_msg').value;
-            const msg = encodeURIComponent(`⭐ *REVIEW: ${selected}/5*\n${feedback}`);
             window.open(`https://wa.me/966534274780?text=${msg}`);
         }
     </script>
